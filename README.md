@@ -15,7 +15,7 @@ The packages needed to be installed in order to run the code.
 ## How to use
 
 ```bash
-  training_set test_set database MSA_name SDS_name
+  python main.py training_set test_set database MSA_name SDS_name
 ```
 
 ## Result
