@@ -19,5 +19,5 @@ The packages needed to be installed in order to run the code.
 ```
 
 ## Result
-the result of each step will be saved in the ```bash  MSA_name_result ``` folder.
+the result of each step will be saved in the ```  MSA_name_result ```and ``` sds_name_result ``` folder.
   
