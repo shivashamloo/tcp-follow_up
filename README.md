@@ -5,15 +5,16 @@ This code builds an HMM based on a training set and then classifies the test set
 ```
 ## FOLDERS
 
-### metrix
+### matrix
 
-Contains the metrix for the xdet
+Contains the matrix for use by xdet
 
 ### tools
 The packages needed to be installed in order to run the code.
 
 ## Mechanism
-At first step it divides each sequence of training set and test set and put them in an individual file. Then it creates a blast database by removing all of the test dat from the database we provide. Afterwards, it runs blast, the desired MSA, the desired SDS, builds an HMM and at the end it tries to classify the test set based on the HMM.
+The tool begins by separating individual sequences from the test and training sets, placing each sequence in its own fasta-formatted intermediate file. An intermediate BLAST database is then created by removing all sequences found in the test data from the provided database. The provided training sequences are then BLASTed against the generated database. The BLAST results are then converted to fasta-format and passed through the chosen MSA, whose results are in turn passed through the SDS and finally the results from the SDS are used to generated an HMM. This HMM is used to classify the sequences from the test set.
+
 ## How to use
 
 ```bash
@@ -21,6 +22,8 @@ At first step it divides each sequence of training set and test set and put them
 ```
 
 ## Result
-the result of each step will be saved in the ```  MSA_name_result ```and ``` sds_name_result ``` folder.
-It also computes the specificity, sensitivity, accuracy and mcc and outputs the result in a latex file called ```finalresult.pdf```.
+The final results, including the computed specificity, sensitivity, accuracy and mcc, are outpit in a pdf file called ```finalresult.pdf```.
+
+In addition, the results from each of intermediate steps will be saved in their respective folders, with the individual sequeneces stored in the ```test_set``` and ```training_set``` folders, the initial blast results stored in the ```blast_xml``` folder, the derived fasta-results in the ```blast_fasta``` folder, the MSA and SDS results in ```MSA_[NAME]_result ``` and ```SDS_[NAME]_result``` folders specific to the type of MSA/SDS used and the HMM stored in the ```HMM_result``` folder.
+
   
