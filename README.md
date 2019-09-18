@@ -24,6 +24,6 @@ The tool begins by separating individual sequences from the test and training se
 ## Result
 The final results, including the computed specificity, sensitivity, accuracy and mcc, are outpit in a pdf file called ```finalresult.pdf```.
 
-In addition, the results from each of intermediate steps will be saved in their respective folders, with the individual sequeneces stored in the ```test_sequences``` and ```train_sequences``` folders, the initial blast results stored in the ```blastxml``` folder, the derived fasta-results in the ```blastfasta``` folder, the MSA and SDS results in ```[MSA NAME]_result ```, ```[SDS NAME]_result``` and for xdet the final result will be in ```SDS_Xdet_result``` folders specific to the type of MSA/SDS used and the HMM stored in the ```HMM_result``` folder.
+In addition, the results from each of intermediate steps will be saved in their respective folders, with the individual sequeneces stored in the ```test_sequences``` and ```train_sequences``` folders, the initial blast results stored in the ```blastxml``` folder, the derived fasta-results in the ```blastfasta``` folder, the MSA and SDS results in ```[MSA NAME]_result ```, ```[SDS NAME]_result``` and for xdet the final result will be in ```SDS_XDet_result``` folders specific to the type of MSA/SDS used and the HMM stored in the ```HMM_result``` folder.
 
   
