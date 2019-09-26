@@ -24,7 +24,6 @@ class DIVISION:
             os.makedirs(original_output)
 
         for f, seq_record in enumerate(SeqIO.parse(self.data, file_type)):
-            f = f+1
             file_number = str(f)
             o_output = original_output + file_number + ".fasta"
             SeqIO.write(seq_record, o_output, "fasta")
