@@ -1,0 +1,15 @@
+algo
+connect
+corelib
+dbapi
+hello
+misc
+objects
+objmgr
+objtools
+serial
+util
+-.*/demo
+-.*/test
+-.*/unit_test
+-.*/samples

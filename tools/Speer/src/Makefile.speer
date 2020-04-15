@@ -1,0 +1,64 @@
+# $Date: 2010/10/13 21:30:51 $
+#
+
+###  PATH TO A PRE-BUILT C++ TOOLKIT
+builddir = $//Users/shivashamloo/Desktop/ncbi_cxx--22_0_0/Clang1100-ReleaseMT64/build
+
+
+###  DEFAULT COMPILATION FLAGS  -- DON'T EDIT OR MOVE THESE 4 LINES !!!
+include $(builddir)/Makefile.mk
+srcdir = .
+BINCOPY = @:
+LOCAL_CPPFLAGS = -I. 
+
+
+#############################################################################
+###  EDIT SETTINGS FOR THE DEFAULT (APPLICATION) TARGET HERE              ### 
+APP = SPEER
+
+SRC = speerData \
+      speerUtils \
+      speerScore \
+      speerScorer \
+      speerColumn \
+      speerAlignment \
+      speer \
+      zScoreGenerator \
+      zToPTable
+
+LIB =   xcd_utils \
+        id1cli id1 \
+        $(BLAST_LIBS) \
+        cdd \
+        ncbimime \
+        scoremat \
+        cn3d \
+        seqset $(SEQ_LIBS) \
+        mmdb \
+        taxon1 \
+        pub \
+        medline \
+        biblio \
+        general \
+        xser sequtil xobjread \
+        xregexp $(PCRE_LIB) \
+        xutil xconnect \
+        xncbi $(SOBJMGR_LIBS)
+
+
+CPPFLAGS = $(ORIG_CPPFLAGS) -D_PUBLIC_
+
+LDFLAGS = $(FAST_LDFLAGS)
+
+LIBS = $(NETWORK_LIBS) $(DL_LIBS) $(PCRE_LIBS) $(ORIG_LIBS) 
+
+
+###  APPLICATION BUILD RULES  -- DON'T EDIT OR MOVE THIS LINE !!!
+include $(builddir)/Makefile.app
+MAKEFILE = Makefile.speer
+
+
+###  PUT YOUR OWN ADDITIONAL TARGETS (MAKE COMMANDS/RULES) HERE
+
+install:  speer
+	mv -i SPEER ../SPEER

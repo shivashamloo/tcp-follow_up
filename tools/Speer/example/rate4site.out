@@ -1,0 +1,64 @@
+Running rate4site:  this may take a while...
+./rate4site.exe -s /tmp/l6MpYx -o /tmp/35mkzL
+
+ =======================================================
+ the rate for site project:                             
+ Version: 2.01. Last updated 12.9.04                     
+ Tal Pupko and his lab:     talp@post.tau.ac.il         
+ Nir Ben-Tal and his lab:   bental@ashtoret.tau.ac.il   
+ Itay Mayrose:  itayMay@post.tau.ac.il                  
+ For program support, please contact Itay Mayrose       
+ =======================================================
+
+
+ ---------------------- THE PARAMETERS ----------------------------
+seq file is: /tmp/l6MpYx
+output file is: /tmp/35mkzL
+rate inference method is: empirical Bayesian estimate
+using a Gamma prior distribution with: 16 discrete categories
+probablistic_model is: JTT
+branch lengths optimization is ML using a gamma model
+
+ -----------------------------------------------------------------
+Finding the tree topology...
+Optimizing branch lengths and alpha...
+ inside bestAlphaAndBBL. Optimizng alpha, iteration: 0
+ inside bestAlphaAndBBL. Optimizng branch lengths, iteration: 0
+ inside bestAlphaAndBBL. Optimizng alpha, iteration: 1
+ inside bestAlphaAndBBL. Optimizng branch lengths, iteration: 1
+The tree was written to a file name called TheTree.txt
+Computing the rates...
+    rate4site has completed.
+Running rate4site:  this may take a while...
+./rate4site.exe -s /tmp/LVrB5x -o /tmp/vslTBk
+
+ =======================================================
+ the rate for site project:                             
+ Version: 2.01. Last updated 12.9.04                     
+ Tal Pupko and his lab:     talp@post.tau.ac.il         
+ Nir Ben-Tal and his lab:   bental@ashtoret.tau.ac.il   
+ Itay Mayrose:  itayMay@post.tau.ac.il                  
+ For program support, please contact Itay Mayrose       
+ =======================================================
+
+
+ ---------------------- THE PARAMETERS ----------------------------
+seq file is: /tmp/LVrB5x
+output file is: /tmp/vslTBk
+rate inference method is: empirical Bayesian estimate
+using a Gamma prior distribution with: 16 discrete categories
+probablistic_model is: JTT
+branch lengths optimization is ML using a gamma model
+
+ -----------------------------------------------------------------
+Finding the tree topology...
+Optimizing branch lengths and alpha...
+ inside bestAlphaAndBBL. Optimizng alpha, iteration: 0
+ inside bestAlphaAndBBL. Optimizng branch lengths, iteration: 0
+
+
+ inside bestAlphaAndBBL. Optimizng alpha, iteration: 1
+ inside bestAlphaAndBBL. Optimizng branch lengths, iteration: 1
+The tree was written to a file name called TheTree.txt
+Computing the rates...
+    rate4site has completed.

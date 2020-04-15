@@ -1,0 +1,5 @@
+[Linker]
+AdditionalOptions=comctl32.lib Rpcrt4.lib
+LinkIncremental=2
+OptimizeReferences=2
+EnableCOMDATFolding=2

@@ -1,0 +1,312 @@
+This file describes how to build 'SPEER', a program for the prediction of 
+specificity determining sites in proteins.  This software is a C++
+implementation of the original SPEER package decribed in
+"Functional Specificity Lies within the Properties and Evolutionary Changes of
+Amino Acids", Chakrabarti S, Bryant SH, Panchenko AR (2007).  J Mol Biol. 373(3):801-10.
+PubMed ID:  17868687
+
+See the file README.txt for an overview and usage of SPEER.
+
+SPEER makes use of the Rate4Site program, which is distributed with SPEER by
+consent of its authors [Mayrose, I., Graur, D., Ben-Tal, N., and Pupko,
+T. 2004. Comparison of site-specific rate-inference methods: Bayesian methods
+are superior. Mol Biol Evol 21: 1781-1791.] 
+
+
+Contact Chris Lanczycki (lanczyck@ncbi.nlm.nih.gov) or Saikat Chakrabarti
+(chakraba@ncbi.nlm.nih.gov) for comments or reports of problems with this
+program.  
+
+The software described is in the public domain, as per the notice at the end of this file.  
+
+Last modified:  $Date: 2010/10/13 21:30:51 $
+
+**  10/30/2008:
+    Initial version
+**  10/13/2010:
+    Update links to C++ Toolkit book
+
+
+============================================================================
+Contents:
+1)  Overview
+2)  Building the NCBI C++ Toolkit
+3)  Building SPEER from Source Code
+    3a)  Building rate4site.exe
+4)  Manifest of SPEER Source Files
+============================================================================
+
+===============================
+1) Overview:
+
+SPEER is written in C++ and built using the NCBI C++ Toolkit, a
+cross-platform framework of libraries developed and actively maintained at NCBI
+for working with diverse types of biological data and associated information.
+
+There are two basic tasks required to build SPEER from source code:
+a)  build the NCBI C++ Toolkit libraries
+b)  build SPEER, linking to these newly made libraries
+
+NOTE:  Building SPEER from source code requires a version of the NCBI C++ 
+       Toolkit built on or after July 01, 2007. 
+
+A third task is necessary in order to include column-specific evolutionary rates
+in the SPEER scoring function:  make sure the 'rate4site.exe' binary distributed
+with SPEER works on your machine, or build it from the source code distributed
+with SPEER by consent of the  Rate4Site authors.  Rate4Site is a self-contained
+codebase and is not reliant on the NCBI C++ Toolkit libraries. 
+
+
+
+The following instructions are largely aimed at Linux users due to the
+difficulty of providing a single binary compatible with all variants and
+releases of Linux.  If the distributed Linux binary does not work under a
+particular version of a Linux OS, please let us know.  In such cases, the
+following instructions allow you to build the program in your environment.
+
+PC and Mac users can also build the binary from the command-line, provided they
+have the basic development tools (i.e., make, C++ compiler, etc.).  On the PC,
+the NCBI C++ Toolkit also provides the ability to generate MSVC C++ project
+files; see the on-line toolkit documentation for details.  Improved Xcode
+support for the Mac has been under active development. 
+
+
+Documentation for the NCBI C++ Toolkit is available online at:
+
+http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=toolkit
+
+
+For new users of the Tookit, it may be helpful to first peruse the 'Getting
+Started' section:
+
+http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=toolkit&part=ch_start
+
+
+[We have tested the build procedure and the resulting binaries on SUSE Linux
+machines, using version 3.4.2 of the GNU compilers.  On the Mac, testing was
+performed on both PowerPC and Intel architectures with OSX 10.4, using GNU
+compilers at version 4.0.1.  The PC binary was built and tested under WinXP
+using the MSVC7 development environment.]  
+
+
+
+===============================
+2)  Building the NCBI C++ Toolkit:
+
+This assumes you have already downloaded and unpacked the SPEER distribution
+for your machine to a directory, which we call 'PATH_TO_SPEER' below.
+
+NOTE:  If you need to make 'configure' (or any other file) an executable
+       file, issue the command:  chmod u+x configure 
+
+
+a)  Point your web browser to the NCBI C++ Toolkit ftp download page at
+
+
+    ftp://ftp.ncbi.nih.gov/toolbox/ncbi_tools++
+
+
+b)  You must use a version of the toolkit distributed ON OR AFTER July 1,
+    2007 to build SPPER, preferably the most recent such release.  
+
+    Download either:
+
+    i)  the CURRENT release.
+
+        ftp://ftp.ncbi.nih.gov/toolbox/ncbi_tools++/CURRENT 
+
+    ii) a release, made on or after July 1, 2007; e.g.,
+
+        ftp://ftp.ncbi.nih.gov/toolbox/ncbi_tools++/2008/Mar_17_2008
+
+    Choose one of the available archive formats to begin the download of the
+    Toolkit to a directory on your computer. You can follow these instructions
+    to unpack the source archive (if it is not done automatically): 
+
+    http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=toolkit&part=ch_start#ch_start.ftp_avail
+
+    Relative to the directory where the archive was unpacked, all Toolkit files
+    will be placed in a subdirectory called 'ncbi_cxx--DATE', where DATE is the
+    date of this version's release.  We refer to this directory as TOOLKIT_ROOT below.
+
+c)  From TOOLKIT_ROOT, run the 'configure' script.  This script defines
+    variables used by the Toolkit build system based on your computer's
+    configuration, and creates Makefile for all libraries needed.  
+
+    > cd TOOLKIT_ROOT
+    > ./configure --without-debug --without-exe --with-projects=PATH_TO_SPEER/src/excludedProjects.lst
+
+
+    'configure' has a bewildering number of options, but --without-debug directs
+    the script to make a 'release' binary, as opposed to a larger, slower
+    'debug' binary.  (A log of the configure script's activity is saved in the
+    file config.log.)   The other options limit the build to just those objects
+    needed by SPEER.
+
+    The result of this command is a 'build tree' (called BUILD_TREE below)
+    (http://www.ncbi.nlm.nih.gov/bookshelf/br.fcgi?book=toolkit&part=ch_start&rendertype=figure&id=ch_start.F2).
+    This is simply a subdirectory of TOOLKIT_ROOT that contains Makefiles and
+    the resulting libraries.  In this way, the Toolkit source code and object
+    code are not mixed in the same directory - convenient especially if one has
+    multiple configurations.   
+    
+d)  Run 'make'.  Printed at the end of a successful configuration, you will find
+    something similar to this command, which triggers a build of the toolkit:  
+
+    >  cd BUILD_TREE/build && make all_p
+
+    The resulting Toolkit libraries are found in BUILD_TREE/lib.  
+
+    If you need to redo the build from scratch, you can obtain a clean slate by
+    first running the following before re-issuing the make all_p command: 
+
+    >  cd BUILD_TREE/build && make clean
+
+    You can make (or re-make, or clean) a *specific* Toolkit library by changing
+    to the corresponding directory under the build tree.  E.g., to only make the
+    'corelib' libraries:
+
+    >  cd BUILD_TREE/build/corelib
+    >  make clean  (optional)
+    >  make all_p
+
+
+===============================
+3)  Building SPEER from Source Code:
+
+
+a)  After building the C++ Toolkit, go to the directory containing the
+    downloaded SPEER source code:
+
+    >  cd PATH_TO_SPEER/src
+
+b)  Edit 'Makefile.speer, changing the definition of 'builddir' to the
+    corresponding path in your build tree, namely BUILD_TREE/build.  
+    Save the file.  
+
+c)  Run make (which also moves the resulting binary one level up):
+
+    >  make -f Makefile.speer install
+
+
+The 'install' make target moves the binary out of the src directory.  You may
+omit the word 'install' to leave the binary in the src directory if you prefer.
+
+
+===============================
+3a)  Building rate4site.exe:
+
+In your SPEER distribution is the Rate4Site program (version 3.1).  Details
+about Rate4Site are available at its web page: 
+
+http://www.tau.ac.il/~itaymay/cp/rate4site.html.
+
+
+PC users:  
+we have included the same binary 'rate4site.exe' that is available for download
+at that web site. 
+
+Linux and Mac users:  
+we have built the 'rate4site.exe' binary from source code using the same
+instructions that appear on the Rate4Site web page. 
+
+
+If appropriate binary does not work on your computer, you have two options: 
+
+1)  build 'rate4site.exe' from source code;
+2)  use SPEER with  the '-wERate 0' command option to not use Rate4Site.
+
+
+
+Although the Rate4Site source code is available at we have included it in
+the SPEER distribution for the convenience (by consent of the authors) for those
+who want (or need) to build the program themselves.  To build rate4site.exe, do
+the following: 
+
+a)  >  cd PATH_TO_SPEER/src/Rate4SiteSource
+
+b1) >  make                       [recommended]
+   --OR--
+b2) >  make -f Makefile_slow      
+
+c)  >  mv rate4site rate4site.exe 
+
+d)  >  mv rate4site.exe PATH_TO_SPEER/rate4site.exe  [optional]
+
+Because Rate4Site's faster version (b1) has problems when a large number of
+sequences are used, its authors provide a fix but at the price of taking longer
+to run.  Nevertheless, we recommend you use the build the faster version unless
+you encounter such issues.  Should that occur, build the slower version using
+command (b2). 
+
+Step (d) is optional.  But if you do not move rate4site.exe to PATH_TO_SPEER (or
+whatever directory in which you have placed the SPEER binary), then you will
+have to provide the path to rate4site.exe at the SPEER command line via the
+-r4sDir argument. 
+
+
+For problems building rate4site.exe, please contact its authors directly.
+
+
+===============================
+4)  Manifest of SPEER Source Files
+
+The following files are in the 'src' subdirectory of PATH_TO_SPEER:
+
+excludedProjects.lst    #  used by the NCBI C++ Toolkit configure script 
+Makefile.speer
+Makefile.speer.app      #  used on PC by MSVC
+Makefile.speer.app.msvc #  used on PC by MSVC
+Makefile.in             #  used on PC by MSVC
+speer.cpp
+speer.hpp
+speerAlignment.cpp
+speerAlignment.hpp
+speerColumn.cpp
+speerColumn.hpp
+speerData.cpp
+speerData.hpp
+speerScore.cpp
+speerScore.hpp
+speerScorer.cpp
+speerScorer.hpp
+speerTypes.hpp
+speerUtils.cpp
+speerUtils.hpp
+zScoreGenerator.cpp
+zScoreGenerator.hpp
+zToPTable.cpp
+zToPTable.hpp
+zToPTablePrivate.hpp
+Rate4SiteSource/        #  directory with all rate4site.exe source code (*)
+
+(*)  To support building from Linux, MacOSX and the PC architectures, we made
+minor changes to the files rate4site.cpp, Makefile, and Makefile_slow.  Should
+you wish to use them the original versions are also included with a '.orig'
+extension.  
+
+
+
+* ===========================================================================
+*
+*                            PUBLIC DOMAIN NOTICE
+*               National Center for Biotechnology Information
+*
+*  This software/database is a "United States Government Work" under the
+*  terms of the United States Copyright Act.  It was written as part of
+*  the author's official duties as a United States Government employee and
+*  thus cannot be copyrighted.  This software/database is freely available
+*  to the public for use. The National Library of Medicine and the U.S.
+*  Government have not placed any restriction on its use or reproduction.
+*
+*  Although all reasonable efforts have been taken to ensure the accuracy
+*  and reliability of the software and data, the NLM and the U.S.
+*  Government do not and cannot warrant the performance or results that
+*  may be obtained by using this software or data. The NLM and the U.S.
+*  Government disclaim all warranties, express or implied, including
+*  warranties of performance, merchantability or fitness for any particular
+*  purpose.
+*
+*  Please cite the author in any work or product based on this material.
+*
+* ===========================================================================

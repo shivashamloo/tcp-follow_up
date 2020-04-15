@@ -1,0 +1,5 @@
+#	$Id: evolObjs.header,v 1.1 2008/11/17 16:45:31 lanczyck Exp $	
+
+purpose "General Phylogenetic program"
+package "LibEvol"
+version "0.9"
